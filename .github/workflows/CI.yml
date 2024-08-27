@@ -1,0 +1,27 @@
+name: Docker Push
+
+on:
+  push:
+    branches:
+      - develop  # 메인 브랜치에 푸시할 때 실행
+
+jobs:
+  docker-push:
+    runs-on: [self-hosted, macOS, ARM64, mac-mini]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login Dockerhub
+        env:
+            DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t vapor-kinest1997:latest .
+          docker tag vapor-kinest1997:latest stevenkais/kinest1997:vapor
+
+      - name: Push Docker image
+        run: docker push stevenkais/kinest1997:vapor
