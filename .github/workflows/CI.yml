@@ -18,10 +18,6 @@ jobs:
             DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-      - name: Build and tag Docker image
+      - name: Build and push Docker image
         run: |
-          docker build -t vapor-kinest1997:latest .
-          docker tag vapor-kinest1997:latest stevenkais/kinest1997:vapor
-
-      - name: Push Docker image
-        run: docker push stevenkais/kinest1997:vapor
+          docker buildx build --platform linux/arm64 -t stevenkais/kinest1997:vapor --push .
