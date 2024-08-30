@@ -19,6 +19,8 @@ enum Entrypoint {
         // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
         
         do {
+            app.http.server.configuration.hostname = "0.0.0.0"
+            app.http.server.configuration.port = 8080
             try await configure(app)
         } catch {
             app.logger.report(error: error)
