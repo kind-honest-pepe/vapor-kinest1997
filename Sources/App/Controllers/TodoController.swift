@@ -7,6 +7,9 @@ struct TodoController: RouteCollection {
 
         todos.get(use: self.index)
         todos.post(use: self.create)
+        todos.group("modify") { todo in
+            todo.get(use: self.modify)
+        }
         todos.group(":todoID") { todo in
             todo.delete(use: self.delete)
         }
@@ -33,5 +36,10 @@ struct TodoController: RouteCollection {
 
         try await todo.delete(on: req.db)
         return .noContent
+    }
+    
+    @Sendable
+    func modify(req: Request) async throws -> HTTPStatus {
+        return .ok
     }
 }

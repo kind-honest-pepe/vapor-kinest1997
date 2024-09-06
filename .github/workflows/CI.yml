@@ -7,7 +7,7 @@ on:
 
 jobs:
   docker-push:
-    runs-on: [self-hosted, macOS, ARM64, macbook]
+    runs-on: [self-hosted, Linux, X64, ubuntu, i7]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
