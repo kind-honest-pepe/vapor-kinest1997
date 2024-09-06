@@ -13,8 +13,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
-            - name: Add user to docker group
+            - name: Create docker group and add user
               run: |
+                  sudo groupadd docker
                   sudo usermod -aG docker $USER
                   newgrp docker
 
