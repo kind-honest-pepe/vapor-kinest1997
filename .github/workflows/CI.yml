@@ -19,6 +19,7 @@ jobs:
 
             - name: Set up Docker Buildx
               run: |
+                  sudo docker buildx rm mybuilder || true
                   sudo docker buildx create --use --name mybuilder
                   sudo docker buildx inspect --bootstrap
 
