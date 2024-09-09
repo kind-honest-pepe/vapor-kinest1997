@@ -33,7 +33,7 @@ jobs:
             - name: Build and push
               run: |
                   sudo docker buildx build \
-                      --platform linux/amd64,linux/arm64 \
+                      --platform linux/arm64 \
                       -t stevenkais/kinest1997:vapor \
                       --push \
                       .
