@@ -7,7 +7,7 @@ on:
 
 jobs:
     docker-push:
-        runs-on: [self-hosted, Linux, X64, ubuntu, i7]
+        runs-on: [self-hosted, ARM64, macOS, pepe, lovely] # M1 Pro Mac
 
         steps:
             - name: Checkout code
