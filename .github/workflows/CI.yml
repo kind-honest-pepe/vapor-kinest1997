@@ -1,9 +1,9 @@
-name: Docker Push
+name: Vapor CI Pipeline
 
 on:
     push:
-        branches:
-            - develop # develop 브랜치에 푸시할 때 실행
+        tags:
+          - '*.*.*' # 태그가 달릴때 실행
 
 jobs:
   build:
