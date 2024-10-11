@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: [self-hosted, ARM64, macOS, pepe, lovely]
+    runs-on: [self-hosted, oracle, ARM64, kinest1997]
 
     steps:
       - name: Login DockerHub
