@@ -6,38 +6,17 @@ on:
             - develop # develop 브랜치에 푸시할 때 실행
 
 jobs:
-    docker-push:
-        runs-on: [self-hosted, ARM64, macOS, pepe, lovely] # M1 Pro Mac
+  build:
+    runs-on: [self-hosted, oracle, ARM64, kinest1997]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+      - name: Build and push Docker image
+        run: |
+          sudo docker buildx build --platform linux/arm64 -t stevenkais/kinest1997:vapor --push .
 
-            - name: Set up QEMU
-              run: |
-                  sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-
-            - name: Set up Docker Buildx
-              run: |
-                  sudo docker buildx rm mybuilder || true
-                  sudo docker buildx create --use --name mybuilder
-                  sudo docker buildx inspect --bootstrap
-
-            - name: Login to DockerHub
-              env:
-                  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-                  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-              run: |
-                  echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin
-
-            - name: Build and push
-              run: |
-                  sudo docker buildx build \
-                      --platform linux/arm64 \
-                      -t stevenkais/kinest1997:vapor \
-                      --push \
-                      --parallel \
-                      .
-
-            - name: Logout from DockerHub
-              run: sudo docker logout
