@@ -23,8 +23,8 @@ jobs:
 
             - name: Pull Docker image
               run: |
-                  sudo docker pull stevenkais/kinest1997:vapor
                   sudo docker image prune -f
+                  sudo docker pull stevenkais/kinest1997:vapor
 
             - name: Determine current active deployment
               id: current_deployment
@@ -48,7 +48,6 @@ jobs:
 
             - name: Deploy new version
               run: |
-                  sudo docker compose pull
                   sudo docker compose up -d --force-recreate vapor_app_${{ steps.current_deployment.outputs.target }}
 
             - name: Wait for new deployment to be ready
