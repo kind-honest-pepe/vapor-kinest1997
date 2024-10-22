@@ -19,7 +19,7 @@ public func configure(_ app: Application) async throws {
     ), as: .psql)
 
     app.migrations.add(CreateTodo())
-    
+    app.routes.caseInsensitive = true
 
     app.views.use(.leaf)
     
